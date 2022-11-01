@@ -1,6 +1,0 @@
-{
-    "require": {
-        "jenssegers/mongodb": "^3.9",
-        "firebase/php-jwt": "^6.3"
-    }
-}

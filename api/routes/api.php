@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\User\AuthController;
+use App\Http\Controllers\User\ProductController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -20,8 +21,20 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 
+// user auth
 Route::controller(AuthController::class)->prefix("auth")->group(function () {
-    Route::post('/login', 'login');
-    Route::post('/user', 'user');
     Route::post('/register', 'register');
+    Route::post('/login', 'login');
+    Route::get('/user', 'user');
 });
+
+
+Route::middleware("auth-jwt")->group(function () {
+
+    // product
+    Route::controller(ProductController::class)->prefix("product")->group(function () {
+        Route::get('/index', 'index');
+    });
+
+});
+
