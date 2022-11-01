@@ -11,7 +11,7 @@ services:
     env_file:
       - ./mongo/.env
     ports:
-      - "55501:27017"
+      - "55601:27017"
     volumes:
       - mongo:/data/db
       - ./mongo/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
@@ -23,7 +23,7 @@ services:
       dockerfile: Dockerfile
     restart: unless-stopped
     ports:
-      - "55502:6379"
+      - "55602:6379"
  
   laravel:
     build:
@@ -43,7 +43,7 @@ services:
       - redis
 
   cli:
-    container_name: cli-fx-container
+    container_name: cli-restaurant-container
     build:
       context: ./api/
       dockerfile: DockerFile
@@ -58,10 +58,11 @@ services:
       - redis
 
   nginx:
+      container_name: nginx-restaurant-container
       build:
-        context: ./websenginxrver/
+        context: ./nginx/
         dockerfile: Dockerfile
-      container_name: nginx-fx-container
+      restart: unless-stopped
       ports:
         - 80:80
       volumes:

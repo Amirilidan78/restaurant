@@ -23,6 +23,9 @@ RUN docker-php-ext-configure gd --with-jpeg --with-webp --with-freetype && docke
 # opcache
 RUN docker-php-ext-install opcache ;
 
+# tokenizer
+RUN docker-php-ext-install tokenizer
+
 # php.ini config
 COPY .docker/php/php.ini /usr/local/etc/php/php.ini
 
@@ -31,6 +34,10 @@ COPY ./.docker/cron/laravel /etc/crontabs/root
 
 # supervisor config
 COPY .docker/supervisor/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+
+# clear
+RUN rm -rf /tmp/* && rm -rf /var/cache/apk/*
+
 
 FROM builder as  cli
 
