@@ -5,8 +5,6 @@ namespace Database\Seeders;
 use App\Models\Enums\OrderDeliveryTypeEnum;
 use App\Models\Enums\OrderPackingTypeEnum;
 use App\Models\Enums\OrderStateEnum;
-use App\Models\Enums\UserGenderEnum;
-use App\Models\Enums\UserStateEnum;
 use App\Models\MealPlan;
 use App\Models\Order;
 use App\Models\OrderProduct;
@@ -14,6 +12,7 @@ use App\Models\Product;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Str;
 
 class OrderSeeder extends Seeder
 {
@@ -24,34 +23,26 @@ class OrderSeeder extends Seeder
         $meal_plans = MealPlan::all() ;
         $product = Product::query()->firstOrFail() ;
         $user = User::query()->firstOrFail() ;
-        $orders = [] ;
         foreach ($meal_plans as $meal_plan) {
-            $orders[] = [
+            $model = Order::query()->updateOrCreate(
                 [
-                    "user_id" => $user ,
-                    "meal_plan" => $meal_plan ,
+                    "meal_plan_id" => $meal_plan["id"] ,
                 ],
                 [
-                    "products" => [
-                        new OrderProduct([
-                            "product_id" => $product["id"] ,
-                            "quantity" => random_int(1,10) ,
-                            "total_price" => random_int(30000,40000) ,
-                        ]),
-                    ] ,
+                    "user_id" => $user["id"] ,
                     "meal_quantity" => random_int(1,20) ,
                     "total_amount" => random_int(100000,200000) ,
                     "delivery_type" => OrderDeliveryTypeEnum::InPerson ,
                     "packing_type" => OrderPackingTypeEnum::PlasticContainer ,
                     "state" => OrderStateEnum::Pending ,
-                    "comment" => null
+                    "comment" => Str::random(40)
                 ]
-            ];
-        }
-
-
-        foreach ( $orders as $order ) {
-            Order::query()->updateOrCreate(...$order) ;
+            ) ;
+            $model->products_embed()->save(new OrderProduct([
+                "product_id" => $product["id"] ,
+                "quantity" => random_int(1,10) ,
+                "total_price" => random_int(30000,40000) ,
+            ])) ;
         }
     }
 }

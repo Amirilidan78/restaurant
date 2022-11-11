@@ -2,8 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Models\Meal;
-use App\Models\MealPlan;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -17,6 +15,7 @@ class DatabaseSeeder extends Seeder
             MealPlanSeeder::class ,
             MealScoreSeeder::class ,
             ProductSeeder::class ,
+            OrderSeeder::class ,
         ]);
     }
 }

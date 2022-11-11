@@ -24,12 +24,12 @@ class Order extends MongoModelParent
         return $this->belongsTo(User::class);
     }
 
-    public function meal_plan() : EmbedsOne
+    public function meal_plan() : BelongsTo
     {
-        return $this->embedsOne(MealPlan::class);
+        return $this->belongsTo(MealPlan::class);
     }
 
-    public function products() : EmbedsMany
+    public function products_embed() : EmbedsMany
     {
         return $this->embedsMany(Product::class);
     }
