@@ -21,6 +21,7 @@ class AuthController extends BaseController
             return $this->response->error("Authentication failed!");
         }
 
+
         $user = User::query()->where("phone",$data["phone"])->first() ;
         if( !$user ) {
             return $this->response->error("Authentication failed!");
@@ -56,7 +57,6 @@ class AuthController extends BaseController
     public function user() : Response
     {
         $user = AuthService::User() ;
-
         if ( !$user ) {
             return $this->response->error("Authentication failed!");
         }
