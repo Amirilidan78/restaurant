@@ -13,6 +13,7 @@ class UpdateProfileRequest extends FormRequest
             "last_name" => "required" ,
             "phone" => "required" ,
             "email" => "required" ,
+            "avatar" => "required" ,
         ];
     }
 }
