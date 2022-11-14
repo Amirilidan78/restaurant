@@ -1,0 +1,7 @@
+.idea
+node_modules
+npm-debug*
+.nuxt
+dist
+package.lock.json
+sw.*
