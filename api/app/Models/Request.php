@@ -2,10 +2,10 @@
 
 namespace App\Models;
 
-use App\Models\Base\MongoAuthParent;
+use App\Models\Base\MongoModelParent;
 use App\Models\Enums\RequestTypeEnum;
 
-class Request extends MongoAuthParent
+class Request extends MongoModelParent
 {
 
     protected $casts = [

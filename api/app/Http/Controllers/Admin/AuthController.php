@@ -9,7 +9,9 @@ use App\Http\Requests\Admin\Auth\ResetPasswordRequest;
 use App\Models\Admin;
 use App\Models\Enums\RequestTypeEnum;
 use App\Models\Request;
+use App\Services\Auth\AuthModel;
 use App\Services\Auth\AuthService;
+use App\Services\Auth\AuthTypeEnum;
 use Illuminate\Http\Response;
 use Illuminate\Support\Str;
 
@@ -29,8 +31,18 @@ class AuthController extends BaseController
             return $this->response->error("Authentication failed!");
         }
 
+        $model = new AuthModel(
+            AuthTypeEnum::Admin ,
+            $admin["first_name"] ,
+            $admin["last_name"] ,
+            $admin["username"] ,
+            $admin["email"] ,
+            $admin["phone"] ,
+        ) ;
+
         return $this->response->ok([
-            "token" => AuthService::GenerateToken($admin)
+            "token" => AuthService::GenerateToken($admin) ,
+            "model" => $model->toArray()
         ]) ;
     }
 

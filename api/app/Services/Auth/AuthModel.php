@@ -12,7 +12,6 @@ class AuthModel
         public string $username ,
         public string $email ,
         public string $phone ,
-        public string $token ,
     )
     {}
 
@@ -25,7 +24,6 @@ class AuthModel
             "username" => $this->username ,
             "email" => $this->email ,
             "phone" => $this->phone ,
-            "token" => $this->token ,
         ] ;
     }
 

@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use App\Services\Auth\AuthService;
 use App\Services\Auth\AuthTypeEnum;
+use App\Services\Response\HttpStatusEnum;
 use Closure;
 use Illuminate\Http\Request;
 
@@ -14,11 +15,10 @@ class AuthUserMiddleware
         $model = AuthService::GetAuthenticatedEntity() ;
 
         if ( !$model )
-            throw new \Exception("unauthorized") ;
+            abort(HttpStatusEnum::UN_AUTHORIZED_RESPONSE_CODE,HttpStatusEnum::UN_AUTHORIZED_RESPONSE_TEXT) ;
 
         if ( $model->type != AuthTypeEnum::User )
-            throw new \Exception("unauthorized") ;
-
+            abort(HttpStatusEnum::UN_AUTHORIZED_RESPONSE_CODE,HttpStatusEnum::UN_AUTHORIZED_RESPONSE_TEXT) ;
 
         return $next($request);
     }

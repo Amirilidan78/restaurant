@@ -24,7 +24,7 @@ class AuthService
             return false ;
         }
 
-        return Hash::check($admin["password"], $password) ;
+        return Hash::check($password,$admin["password"]) ;
     }
 
     public static function ValidateUserPassword(string $phone, string $password) : bool
@@ -35,7 +35,7 @@ class AuthService
             return false ;
         }
 
-        return Hash::check($user["password"], $password) ;
+        return Hash::check($password,$user["password"] ) ;
     }
 
     public static function GenerateToken(User|Admin $model) : string
@@ -48,7 +48,6 @@ class AuthService
                     $model["username"] ,
                     $model["email"] ,
                     $model["phone"] ,
-                    $model["token"] ,
             ))->toArray() ,
             "valid_until" => now()->addHours(self::api_expiration_hour)->timestamp
         ];
@@ -64,7 +63,14 @@ class AuthService
             return null ;
         }
 
-        return new AuthModel(...$arr["auth"]) ;
+        return new AuthModel(
+            AuthTypeEnum::from($arr["auth"]->type) ,
+            $arr["auth"]->first_name ,
+            $arr["auth"]->last_name ,
+            $arr["auth"]->username ,
+            $arr["auth"]->email ,
+            $arr["auth"]->phone ,
+        ) ;
     }
 
     public static function GetAuthenticatedEntity() : AuthModel|null
