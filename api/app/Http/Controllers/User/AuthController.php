@@ -16,7 +16,7 @@ class AuthController extends BaseController
     {
         $data = $request->validated() ;
 
-        $valid = AuthService::ValidateUser($data["phone"],$data["password"]) ;
+        $valid = AuthService::ValidateUserPassword($data["phone"],$data["password"]) ;
         if( !$valid ) {
             return $this->response->error("Authentication failed!");
         }
@@ -56,7 +56,7 @@ class AuthController extends BaseController
 
     public function user() : Response
     {
-        $user = AuthService::User() ;
+        $user = AuthService::GetAuthenticatedEntity() ;
         if ( !$user ) {
             return $this->response->error("Authentication failed!");
         }
