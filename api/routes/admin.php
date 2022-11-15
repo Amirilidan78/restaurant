@@ -24,6 +24,7 @@ Route::middleware("auth-admin")->group(function () {
     // profile
     Route::controller(ProfileController::class)->prefix("/profile")->group(function () {
         Route::get('/get-profile', 'get_profile');
+        Route::get('/get-avatar', 'get_avatar');
         Route::post('/update-profile', 'update_profile');
         Route::post('/update-password', 'update_password');
     });

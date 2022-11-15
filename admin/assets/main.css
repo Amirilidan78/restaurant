@@ -75,11 +75,14 @@
 body,html {
   font-family: "Vazirmatn","sans-serif" ;
   overflow-x: hidden;
-  background: #f5f8fa;
+  background: #eef0f8;
   direction: rtl;
   text-align: right;
 }
 
+.bg-dark {
+  background: #1e1e2d;
+}
 .text-subject {
   font-weight: 400 !important;
   color : #6a6a6a !important ;

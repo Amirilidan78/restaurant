@@ -1,16 +1,9 @@
 <template>
-  <div>
-    <header>
-      <div>
-        <nuxt-link to="/">Dashboard</nuxt-link>
-        <nuxt-link to="products">Products</nuxt-link>
-        <nuxt-link to="meals">Meals</nuxt-link>
-        <nuxt-link to="users">Users</nuxt-link>
-        <nuxt-link to="profile">Profile</nuxt-link>
-        <nuxt-link to="logout">Logout</nuxt-link>
-      </div>
-    </header>
-    <Nuxt/>
+  <div class="w-100 min-h-full bg-gray-200">
+    <LayoutHeader />
+    <div class="p-right-250px">
+      <Nuxt class="py-5 px-5"/>
+    </div>
   </div>
 </template>
 <script>
@@ -18,8 +11,10 @@ export default {
 
 }
 </script>
-<style>
-  a {
-    margin: 10px ;
+<style scoped>
+@media only screen and (min-width: 991px) {
+  .p-right-250px {
+    padding-right: 250px ;
   }
+}
 </style>

@@ -35,6 +35,9 @@ export default {
     { src: '~plugins/core/auth', mode: 'client' } ,
     { src: '~plugins/config/axios', mode: 'client' } ,
     { src: '~plugins/config/swal', mode: 'client' } ,
+    { src: '~plugins/custom/confirmation', mode: 'client' } ,
+    { src: '~plugins/custom/click-outside', mode: 'client' } ,
+    { src: '~plugins/custom/file', mode: 'client' } ,
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components

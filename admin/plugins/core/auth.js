@@ -12,7 +12,7 @@ export default function ({ app },inject) {
   const setToken = (token) => set(tokenKey,token)
   const removeToken = () => unset(tokenKey)
 
-  const getModel = () => getToken(modelKey)
+  const getModel = () => get(modelKey)
   const setModel = (model) => set(modelKey,model)
   const removeModel = () => unset(modelKey)
 

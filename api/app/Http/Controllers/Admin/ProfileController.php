@@ -12,6 +12,20 @@ use Illuminate\Http\Response;
 
 class ProfileController extends BaseController
 {
+    public function get_avatar() : Response
+    {
+        $model = AuthService::GetAuthenticatedEntity() ;
+
+        $admin = Admin::query()->where("username",$model->username)->first();
+        if( !$admin ) {
+            return $this->response->error("Admin not found!");
+        }
+
+        return $this->response->ok([
+            "avatar" => $admin["avatar"]
+        ]) ;
+    }
+
     public function get_profile() : Response|AdminResource
     {
         $model = AuthService::GetAuthenticatedEntity() ;

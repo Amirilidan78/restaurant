@@ -20,8 +20,8 @@ class AdminSeeder extends Seeder
                     "username" => "ilidan",
                 ],
                 [
-                    "first_name" => "amir",
-                    "last_name" => "ranjbar",
+                    "first_name" => "امیر حسین",
+                    "last_name" => "رنجبر حسنی",
                     "phone" => "+989370843199",
                     "email" => "amirilidan78@gmail.com",
                     "password" => bcrypt("Amir.23334152"),

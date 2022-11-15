@@ -25,7 +25,7 @@
 
     <div v-else-if="items.length === 0" class="d-flex justify-content-center align-items-center text-center min-h-400px">
 
-      <p> Nothing Found ! </p>
+      <p> رکوردی یافت نشد </p>
 
     </div>
 

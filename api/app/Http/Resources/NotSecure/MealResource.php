@@ -14,6 +14,7 @@ class MealResource extends ResourceCore
             "description" => $this["description"] ,
             "price" => $this["price"] ,
             "price_string" => number_format($this["price"],0,".",",") ,
+            "images" => $this["images"] ,
         ];
     }
 }
