@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Route;
 Route::controller(AuthController::class)->prefix("/auth")->group(function () {
     Route::post('/login', 'login');
     Route::post('/forgot-password', 'forgot_password');
+    Route::post('/validate-forgot-password', 'validate_forgot_password');
     Route::post('/reset-password', 'reset_password');
 });
 

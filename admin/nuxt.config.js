@@ -68,7 +68,7 @@ export default {
     cancelButtonColor: null ,
     confirmButtonClass: 'btn mx-1 fw-bold btn-light-primary',
     cancelButtonClass: 'btn mx-1 fw-bold btn-light-warning',
-    confirmButtonText : "Ok, gt it!",
+    confirmButtonText : "باشه, متوجه شدم!",
     reverseButtons : true ,
     focusConfirm: true  ,
   },

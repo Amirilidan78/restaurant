@@ -6,6 +6,7 @@ use App\Http\Controllers\BaseController;
 use App\Http\Requests\Admin\Auth\ForgotPasswordRequest;
 use App\Http\Requests\Admin\Auth\LoginRequest;
 use App\Http\Requests\Admin\Auth\ResetPasswordRequest;
+use App\Http\Requests\Admin\Auth\ValidateForgotPasswordRequest;
 use App\Models\Admin;
 use App\Models\Enums\RequestTypeEnum;
 use App\Models\Request;
@@ -23,12 +24,12 @@ class AuthController extends BaseController
 
         $valid = AuthService::ValidateAdminPassword($data["username"],$data["password"]) ;
         if( !$valid ) {
-            return $this->response->error("Authentication failed!");
+            return $this->response->error("رمز عبور یا نام کاربری اشتباه است");
         }
 
         $admin = Admin::query()->where("username",$data["username"])->first() ;
         if( !$admin ) {
-            return $this->response->error("Authentication failed!");
+            return $this->response->error("رمز عبور یا نام کاربری اشتباه است");
         }
 
         $model = new AuthModel(
@@ -52,7 +53,7 @@ class AuthController extends BaseController
 
         $admin = Admin::query()->where("username",$data["username"])->first() ;
         if( !$admin ) {
-            return $this->response->error("Admin not found!");
+            return $this->response->error("حساب کاربری یافت نشد");
         }
 
         $request = Request::query()->create([
@@ -66,18 +67,30 @@ class AuthController extends BaseController
         return $this->response->ok() ;
     }
 
+    public function validate_forgot_password(ValidateForgotPasswordRequest $request) : Response
+    {
+        $data = $request->validated() ;
+
+        $request = Request::query()->where("token",$data["token"])->where("type",RequestTypeEnum::AdminForgotPassword->value)->first() ;
+        if( !$request ) {
+            return $this->response->error("لینک فراموشی رمز عبور نامعتبر یا منقضی شده است");
+        }
+
+        return $this->response->ok() ;
+    }
+
     public function reset_password(ResetPasswordRequest $request) : Response
     {
         $data = $request->validated() ;
 
-        $admin = Admin::query()->where("username",$data["username"])->first() ;
-        if( !$admin ) {
-            return $this->response->error("Admin not found!");
+        $request = Request::query()->where("token",$data["token"])->where("type",RequestTypeEnum::AdminForgotPassword->value)->first() ;
+        if( !$request ) {
+            return $this->response->error("لینک فراموشی رمز عبور نامعتبر یا منقضی شده است");
         }
 
-        $request = Request::query()->where("username",$data["username"])->where("token",$data["token"])->where("type",RequestTypeEnum::AdminForgotPassword->value)->first() ;
-        if( !$request ) {
-            return $this->response->error("Invalid request!");
+        $admin = Admin::query()->where("username",$request["username"])->first() ;
+        if( !$admin ) {
+            return $this->response->error("حساب کاربری یافت نشد");
         }
 
         $admin->update([
@@ -93,7 +106,7 @@ class AuthController extends BaseController
     {
         $model = AuthService::GetAuthenticatedEntity() ;
         if ( !$model ) {
-            return $this->response->error("Authentication failed!");
+            return $this->response->error("لطفا دوباره وارد حساب کاربری خود شوید");
         }
 
         return $this->response->ok($model->toArray()) ;
