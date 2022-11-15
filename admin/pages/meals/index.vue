@@ -76,8 +76,8 @@
                   <td>{{ item.name }}</td>
                   <td> <b>{{ item.price_string }}</b> تومان </td>
                   <td>
-                    <span class="btn btn-warning btn-sm py-1 fs-8" @click="() => showEditModal(item)" >ویرایش</span>
-                    <span class="btn btn-danger btn-sm py-1 fs-8" @click="() => deleteMeal(item.id)" >حذف</span>
+                    <span class="btn btn-warning btn-sm py-1 px-2 fs-8" @click="() => showEditModal(item)" >ویرایش</span>
+                    <span class="btn btn-danger btn-sm py-1 px-2 fs-8" @click="() => deleteMeal(item.id)" >حذف</span>
                   </td>
                 </tr>
               </template>
