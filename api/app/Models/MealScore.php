@@ -4,7 +4,7 @@ namespace App\Models;
 
 use App\Models\Base\MongoModelParent;
 use Jenssegers\Mongodb\Relations\BelongsTo;
-use Jenssegers\Mongodb\Relations\EmbedsOne;
+use Jenssegers\Mongodb\Relations\HasOne;
 
 class MealScore extends MongoModelParent
 {
@@ -13,8 +13,8 @@ class MealScore extends MongoModelParent
         return $this->belongsTo(User::class) ;
     }
 
-    public function meal_plan() : EmbedsOne
+    public function meal_plan() : BelongsTo
     {
-        return $this->embedsOne(MealPlan::class) ;
+        return $this->belongsTo(MealPlan::class) ;
     }
 }

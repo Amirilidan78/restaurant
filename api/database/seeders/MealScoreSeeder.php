@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\MealPlan;
 use App\Models\MealScore;
+use App\Models\OrderProduct;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -15,24 +16,20 @@ class MealScoreSeeder extends Seeder
 
     public function run()
     {
-        $scores = [] ;
-        $user = User::query()->firstOrFail();
-        $plans = MealPlan::all() ;
+        $plans = MealPlan::all();
+        $user = User::query()->firstOrFail() ;
         foreach ( $plans as $plan ) {
-            $scores[] = [
+            MealScore::query()->updateOrCreate(
                 [
                     "user_id" => $user["id"] ,
                     "meal_plan_id" => $plan["id"] ,
                 ],
                 [
                     "score" => rand(0,5) ,
-                    "description" => Str::random(20)
+                    "description" => Str::random(20) ,
+                    "is_accepted" => false
                 ]
-            ];
-        }
-
-        foreach ( $scores as $score ) {
-            MealScore::query()->updateOrCreate(...$score) ;
+            );
         }
     }
 }

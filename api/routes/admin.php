@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\MealController;
+use App\Http\Controllers\Admin\MealScoreController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\UserController;
@@ -53,6 +54,14 @@ Route::middleware("auth-admin")->group(function () {
         Route::post('/store', 'store');
         Route::post('/update/{meal}', 'update');
         Route::post('/delete/{meal}', 'delete');
+    });
+
+    // meal scores
+    Route::controller(MealScoreController::class)->prefix("/meal-scores")->group(function () {
+        Route::get('/index', 'index');
+        Route::get('/show/{meal_score}', 'show');
+        Route::post('/update/{meal_score}', 'update');
+        Route::post('/delete/{meal_score}', 'delete');
     });
 
 });

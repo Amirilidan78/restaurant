@@ -66,6 +66,12 @@
                     />
 
                     <AsideSingleItem
+                      _icon="check-list"
+                      _title="امتیاز ها"
+                      _to="/meal-scores"
+                    />
+
+                    <AsideSingleItem
                       _icon="user"
                       _title="پروفایل"
                       _to="/profile"
