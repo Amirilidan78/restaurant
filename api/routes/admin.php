@@ -32,6 +32,9 @@ Route::middleware("auth-admin")->group(function () {
     // users
     Route::controller(UserController::class)->prefix("/users")->group(function () {
         Route::get('/index', 'index');
+        Route::get('/show/{product}', 'show');
+        Route::post('/update/{product}', 'update');
+        Route::post('/delete/{product}', 'delete');
     });
 
     // products

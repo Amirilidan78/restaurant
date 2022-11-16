@@ -1,5 +1,5 @@
 <template>
-  <div v-if="!loading">
+  <div >
 
     <ModalCenter :_show="modal" :_dismissHook="hideModal" _size="md">
       <template v-slot:header>
@@ -31,6 +31,7 @@
                 _placeholder="قیمت را وارد کنید"
                 :updateHook="val => meal.price = val"
                 :_default_value="meal.price"
+                _type="number"
               />
 
               <div>
@@ -55,44 +56,55 @@
       </template>
     </ModalCenter>
 
-    <div class="row mt-5 ">
-      <div class="col-12">
-        <div class="card">
-          <div class="card-header">
-            <h3 class="card-title">غذا ها</h3>
-            <div class="card-toolbar">
-              <button class="btn btn-icon btn-active-icon-primary" @click="showModal">
-                <Icon name="plus-rounded" color="nothing" />
-              </button>
-            </div>
-          </div>
-          <div class="card-body">
-            <TableSimple
-              _fetchUrl="/api/admin/meals/index"
-              :_heads="[ 'نام', 'قیمت', 'عملیات ها' ]"
-            >
-              <template v-slot="{items}">
-                <tr v-for="item in items">
-                  <td>{{ item.name }}</td>
-                  <td> <b>{{ item.price_string }}</b> تومان </td>
-                  <td>
-                    <span class="btn btn-warning btn-sm py-1 px-2 fs-8" @click="() => showEditModal(item)" >ویرایش</span>
-                    <span class="btn btn-danger btn-sm py-1 px-2 fs-8" @click="() => deleteMeal(item.id)" >حذف</span>
-                  </td>
-                </tr>
-              </template>
-            </TableSimple>
+    <template v-if="loading">
+      <div class="row">
+        <div class="col-12">
+          <div class="card">
+            <LoadingSimple  h="400"/>
           </div>
         </div>
       </div>
-    </div>
+    </template>
+
+    <template v-else>
+      <div class="row mt-5 ">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">غذا ها</h3>
+              <div class="card-toolbar">
+                <button class="btn btn-icon btn-active-icon-primary" @click="showModal">
+                  <Icon name="plus-rounded" color="nothing" />
+                </button>
+              </div>
+            </div>
+            <div class="card-body">
+              <TableSimple
+                _fetchUrl="/api/admin/meals/index"
+                :_heads="[ 'نام', 'قیمت', 'عملیات ها' ]"
+              >
+                <template v-slot="{items}">
+                  <tr v-for="item in items">
+                    <td>{{ item.name }}</td>
+                    <td> <b>{{ item.price_string }}</b> تومان </td>
+                    <td>
+                      <span class="btn btn-warning btn-sm py-1 px-2 fs-8" @click="() => showEditModal(item)" >ویرایش</span>
+                      <span class="btn btn-danger btn-sm py-1 px-2 fs-8" @click="() => deleteMeal(item.id)" >حذف</span>
+                    </td>
+                  </tr>
+                </template>
+              </TableSimple>
+            </div>
+          </div>
+        </div>
+      </div>
+    </template>
 
   </div>
 </template>
 
 <script>
 export default {
-
   layout: "admin",
 
   middleware: ['auth'],
@@ -136,23 +148,23 @@ export default {
     },
 
     storeMeal(){
-      this.loading = true
+      this.modal_loading = true
       this.$axios.post("/api/admin/meals/store",this.meal)
         .then( () => {
           this.$swal_success()
           this.hideModal()
         })
-        .finally( () => this.loading = false )
+        .finally( () => this.modal_loading = false )
     },
 
     updateMeal(){
-      this.loading = true
+      this.modal_loading = true
       this.$axios.post(`/api/admin/meals/update/${this.meal.id}`,this.meal)
         .then( () => {
           this.$swal_success()
           this.hideModal()
         })
-        .finally( () => this.loading = false )
+        .finally( () => this.modal_loading = false )
     },
 
     deleteMeal(id){

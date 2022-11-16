@@ -6,7 +6,7 @@
       <div>
 
         <p>
-          Something went wrong
+          خطایی رخ داد
         </p>
 
         <button class="btn btn-icon" @click="fetchMethod">

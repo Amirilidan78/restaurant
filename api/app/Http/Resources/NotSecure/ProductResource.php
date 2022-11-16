@@ -15,6 +15,7 @@ class ProductResource extends ResourceCore
             "price" => $this["price"] ,
             "price_string" => number_format($this["price"],0,".",",") ,
             "stock" => $this["stock"] ,
+            "images" => $this["images"] ,
         ];
     }
 }

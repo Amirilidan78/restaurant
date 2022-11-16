@@ -1,26 +1,106 @@
 <template>
   <div>
 
-    <section>
+    <ModalCenter :_show="modal" :_dismissHook="hideModal" _size="md">
+      <template v-slot:header>
+        <span class="px-2">ویرایش کاربر</span>
+      </template>
+      <template v-slot:body>
+        <div class="w-100" >
+          <LoadingSimple h="200" v-if="modal_loading" />
+          <div v-else class="row">
+            <div class="col-lg-9">
 
-      <h3>Users</h3>
+              <InputSolid
+                _label="نام"
+                _placeholder="نام را وارد کنید"
+                :updateHook="val => user.first_name = val"
+                :_default_value="user.first_name"
+              />
 
-      <TableSimple
-        _fetchUrl="/api/admin/users/index"
-        :_heads="[ 'First name', 'Last name', 'Phone','Email', 'Created at' ]"
-      >
-        <template v-slot="{items}">
-          <tr v-for="item in items">
-            <td>{{ item.first_name }}</td>
-            <td>{{ item.last_name }}</td>
-            <td>{{ item.phone }}</td>
-            <td>{{ item.email }}</td>
-            <td>{{ item.created_at }}</td>
-          </tr>
-        </template>
-      </TableSimple>
+              <InputSolid
+                _label="نام خانوادگی"
+                _placeholder="نام خانوادگی را وارد کنید"
+                :updateHook="val => user.last_name = val"
+                :_default_value="user.last_name"
+              />
 
-    </section>
+              <SelectSingle
+                _placeholder="جنسیت را انتخاب کنید"
+                _label="جنسیت"
+                :_options="gender_list"
+                :updateHook="( val ) => user.gender = val "
+                :_default_value="{ id : user.gender ,name : user.gender_text }"
+              />
+
+              <InputSolid
+                _label="شماره همراه"
+                _placeholder="شماره همراه را وارد کنید"
+                :updateHook="val => user.phone = val"
+                :_default_value="user.phone"
+              />
+
+              <SelectSingle
+                _placeholder="وضعیت را انتخاب کنید"
+                _label="وضعیت"
+                :_options="state_list"
+                :updateHook="( val ) => user.state = val "
+                :_default_value="{ id : user.state ,name : user.state_text }"
+              />
+
+            </div>
+          </div>
+        </div>
+      </template>
+      <template v-slot:footer>
+        <div class="w-100 text-center">
+          <button class="btn btn-sm btn-primary w-100 float-end" @click="updateUser">ویرایش</button>
+        </div>
+      </template>
+    </ModalCenter>
+
+    <template v-if="loading">
+      <div class="row">
+        <div class="col-12">
+          <div class="card">
+            <LoadingSimple  h="400"/>
+          </div>
+        </div>
+      </div>
+    </template>
+
+    <template>
+      <div class="row mt-5 ">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">کاربران</h3>
+            </div>
+            <div class="card-body">
+              <TableSimple
+                _fetchUrl="/api/admin/users/index"
+                :_heads="[ 'نام', 'نام خانوادگی', 'جنسیت', 'شماره همراه', 'شماره ثابت', 'وضعیت', 'عملیات' ]"
+              >
+                <template v-slot="{items}">
+                  <tr v-for="item in items">
+                    <td>{{ item.first_name }}</td>
+                    <td>{{ item.last_name }}</td>
+                    <td>{{ item.gender_text }}</td>
+                    <td>{{ item.phone }}</td>
+                    <td>{{ item.mobile }}</td>
+                    <td>{{ item.state_text }}</td>
+                    <td>
+                      <span class="btn btn-warning btn-sm py-1 px-2 fs-8" @click="() => showEditModal(item)" >ویرایش</span>
+                      <span class="btn btn-danger btn-sm py-1 px-2 fs-8" @click="() => deleteUser(item.id)" >حذف</span>
+                    </td>
+                  </tr>
+                </template>
+              </TableSimple>
+            </div>
+          </div>
+        </div>
+      </div>
+    </template>
 
   </div>
 </template>
@@ -34,17 +114,96 @@ export default {
 
   data() {
     return {
-
+      loading: false ,
+      modal_loading: false ,
+      modal: false,
+      editing: false,
+      user: {},
+      gender_list: [
+        {
+          id: "male",
+          name: "مرد",
+        },
+        {
+          id: "female",
+          name: "زن",
+        },
+      ],
+      state_list: [
+        {
+          id: "pending",
+          name: "انتظار",
+        },
+        {
+          id: "active",
+          name: "فعال",
+        },
+        {
+          id: "suspend",
+          name: "غیر فعال",
+        },
+      ],
     }
   },
 
-  created() {
-
-  },
+  created() {},
 
   methods: {
 
+    hideModal(){
+      this.modal = false
+    },
 
+    showModal(){
+      this.modal = true
+      this.editing = false
+      this.user = {}
+    },
+
+    showEditModal(user){
+      this.editing = true
+      this.modal = true
+      this.user = {...user}
+    },
+
+    changeUserImages(e){
+      this.user.images = []
+      this.modal_loading = true
+      this.$fileListToBase64(e.target.files)
+        .then( list => this.user.images = list )
+        .finally( () => this.modal_loading = false )
+    },
+
+    storeUser(){
+      this.modal_loading = true
+      this.$axios.post("/api/admin/users/store",this.user)
+        .then( () => {
+          this.$swal_success()
+          this.hideModal()
+        })
+        .finally( () => this.modal_loading = false )
+    },
+
+    updateUser(){
+      this.modal_loading = true
+      this.$axios.post(`/api/admin/users/update/${this.user.id}`,this.user)
+        .then( () => {
+          this.$swal_success()
+          this.hideModal()
+        })
+        .finally( () => this.modal_loading = false )
+    },
+
+    deleteUser(id){
+      this.$confirmation({
+        confirmed_then: () => {
+          this.loading = true
+          this.$axios.post(`/api/admin/users/delete/${id}`)
+            .then( () => this.$swal_success() )
+            .finally( () => this.loading = false )
+        }
+      })
+    },
   },
 
 }
