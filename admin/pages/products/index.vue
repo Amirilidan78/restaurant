@@ -74,7 +74,7 @@
       </div>
     </template>
 
-    <template>
+    <template v-else >
       <div class="row mt-5 ">
         <div class="col-12">
           <div class="card">
@@ -88,6 +88,7 @@
             </div>
             <div class="card-body">
               <TableSimple
+                table="table"
                 _fetchUrl="/api/admin/products/index"
                 :_heads="[ 'نام', 'قیمت', 'عملیات ها' ]"
               >
@@ -161,6 +162,7 @@ export default {
       this.$axios.post("/api/admin/products/store",this.product)
         .then( () => {
           this.$swal_success()
+          this.$refs.table.fetchMethod()
           this.hideModal()
         })
         .finally( () => this.modal_loading = false )
@@ -171,6 +173,7 @@ export default {
       this.$axios.post(`/api/admin/products/update/${this.product.id}`,this.product)
         .then( () => {
           this.$swal_success()
+          this.$refs.table.fetchMethod()
           this.hideModal()
         })
         .finally( () => this.modal_loading = false )
@@ -181,7 +184,10 @@ export default {
         confirmed_then: () => {
           this.loading = true
           this.$axios.post(`/api/admin/products/delete/${id}`)
-            .then( () => this.$swal_success() )
+            .then( () => {
+              this.$swal_success()
+              this.$refs.table.fetchMethod()
+            })
             .finally( () => this.loading = false )
         }
       })

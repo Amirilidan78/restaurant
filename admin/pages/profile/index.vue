@@ -1,59 +1,111 @@
 <template>
-  <div v-if="!loading">
+  <div>
 
-    <section>
+    <div class="row">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">اطلاعات حساب کاربری</h3>
+          </div>
+          <div class="card-body">
+            <div class="row" v-if="loading">
+              <div class="col-12">
+                <LoadingSimple h="300"  />
+              </div>
+            </div>
+            <div class="row" v-else >
+              <div class="col-lg-7">
 
-      <h3>Profile</h3>
+                <InputSolid
+                  _label="نام"
+                  _placeholder="نام را وارد کنید"
+                  :updateHook="val => profile.first_name = val"
+                  :_default_value="profile.first_name"
+                />
 
-      <div>
-        <label for="first_name">First name</label>
-        <input type="text" v-model="profile.first_name">
+                <InputSolid
+                  _label="نام خانوادگی"
+                  _placeholder="نام خانوادگی را وارد کنید"
+                  :updateHook="val => profile.last_name = val"
+                  :_default_value="profile.last_name"
+                />
+
+                <InputSolid
+                  _label="ایمیل"
+                  _placeholder="ایمیل را وارد کنید"
+                  :updateHook="val => profile.email = val"
+                  :_default_value="profile.email"
+                />
+
+                <InputSolid
+                  _label="شماره همراه"
+                  _placeholder="شماره همراه را وارد کنید"
+                  :updateHook="val => profile.phone = val"
+                  :_default_value="profile.phone"
+                />
+
+              </div>
+              <div class="col-lg-5 d-flex justify-content-center align-items-center text-center">
+                <div>
+                  <div>
+                    <img :src="profile.avatar ?? avatarCallback" alt="avatar" height="250px" width="250px" class="cursor-pointer rounded-circle" @click="() => $refs.profile_avatar.click()" >
+                    <input type="file" hidden ref="profile_avatar" @input="changeAvatar">
+                  </div>
+                  <div v-if="profile.avatar">
+                    <button class="btn btn-danger btn-sm mt-3" @click="() => profile.avatar = null"> حذف عکس پروفایل</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card-footer text-end">
+            <button class="btn btn-primary btn-sm" @click="updateProfile">ویرایش</button>
+          </div>
+        </div>
       </div>
+    </div>
 
-      <div>
-        <label for="first_name">Last name</label>
-        <input type="text" v-model="profile.last_name">
+
+    <div class="row mt-5 ">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">تغییر رمز عبور</h3>
+          </div>
+          <div class="card-body">
+            <div class="row" v-if="loading">
+              <div class="col-12">
+                <LoadingSimple h="300"  />
+              </div>
+            </div>
+            <div class="row" v-else >
+              <div class="col-lg-9">
+
+                <InputSolid
+                  _label="رمز عبور جدید"
+                  _placeholder="رمز عبور جدید را وارد کنید"
+                  :updateHook="val => password = val"
+                  :_default_value="password"
+                  _type="password"
+                />
+
+                <InputSolid
+                  _label="تکرار رمز عبور جدید"
+                  _placeholder="تکرار رمز عبور جدید را وارد کنید"
+                  :updateHook="val => confirm_password = val"
+                  :_default_value="confirm_password"
+                  _type="password"
+                />
+
+              </div>
+            </div>
+          </div>
+          <div class="card-footer text-end">
+            <button class="btn btn-primary btn-sm" @click="updatePassword">تغییر</button>
+          </div>
+        </div>
       </div>
-
-      <div>
-        <label for="email">Email</label>
-        <input type="text" v-model="profile.email">
-      </div>
-
-      <div>
-        <label for="phone">Phone</label>
-        <input type="text" v-model="profile.phone">
-      </div>
-
-      <div>
-        <label for="avatar">Avatar</label>
-        <img :src="profile.avatar" alt="avatar" height="100px" >
-        <input type="file" @input="changeAvatar">
-      </div>
-
-      <button @click="updateProfile">Submit</button>
-
-    </section>
-
-    <hr>
-
-    <section>
-
-      <h3>Password</h3>
-
-      <div>
-        <label for="password">Password</label>
-        <input type="text" v-model="password">
-      </div>
-
-      <div>
-        <label for="confirm_password">Confirm password</label>
-        <input type="text" v-model="confirm_password">
-      </div>
-
-      <button @click="updatePassword">Submit</button>
-
-    </section>
+    </div>
 
   </div>
 </template>
@@ -71,6 +123,7 @@ export default {
       profile: null ,
       password: "" ,
       confirm_password: "" ,
+      avatarCallback: "/avatar.png",
     }
   },
 

@@ -80,6 +80,7 @@
             </div>
             <div class="card-body">
               <TableSimple
+                table="table"
                 _fetchUrl="/api/admin/meals/index"
                 :_heads="[ 'نام', 'قیمت', 'عملیات ها' ]"
               >
@@ -152,6 +153,7 @@ export default {
       this.$axios.post("/api/admin/meals/store",this.meal)
         .then( () => {
           this.$swal_success()
+          this.$refs.table.fetchMethod()
           this.hideModal()
         })
         .finally( () => this.modal_loading = false )
@@ -162,6 +164,7 @@ export default {
       this.$axios.post(`/api/admin/meals/update/${this.meal.id}`,this.meal)
         .then( () => {
           this.$swal_success()
+          this.$refs.table.fetchMethod()
           this.hideModal()
         })
         .finally( () => this.modal_loading = false )
@@ -172,7 +175,10 @@ export default {
         confirmed_then: () => {
           this.loading = true
           this.$axios.post(`/api/admin/meals/delete/${id}`)
-            .then( () => this.$swal_success() )
+            .then( () => {
+              this.$swal_success()
+              this.$refs.table.fetchMethod()
+            })
             .finally( () => this.loading = false )
         }
       })

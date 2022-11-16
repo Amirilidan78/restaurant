@@ -9,11 +9,12 @@ class UpdateUserRequest extends FormRequest
     public function rules()
     {
         return [
-            "name" => "required" ,
-            "description" => "required" ,
-            "images" => "required" ,
-            "price" => "required" ,
-            "stock" => "required" ,
+            "first_name" => "required" ,
+            "last_name" => "required" ,
+            "gender" => "required" ,
+            "phone" => "required" ,
+            "address" => "required" ,
+            "state" => "required" ,
         ];
     }
 }

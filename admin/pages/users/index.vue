@@ -76,7 +76,7 @@
       </div>
     </template>
 
-    <template>
+    <template v-else>
       <div class="row mt-5 ">
         <div class="col-12">
           <div class="card">
@@ -85,6 +85,7 @@
             </div>
             <div class="card-body">
               <TableSimple
+                ref="table"
                 _fetchUrl="/api/admin/users/index"
                 :_heads="[ 'نام', 'نام خانوادگی', 'جنسیت', 'شماره همراه', 'شماره ثابت', 'وضعیت', 'عملیات' ]"
               >
@@ -173,29 +174,12 @@ export default {
       this.user = {...user}
     },
 
-    changeUserImages(e){
-      this.user.images = []
-      this.modal_loading = true
-      this.$fileListToBase64(e.target.files)
-        .then( list => this.user.images = list )
-        .finally( () => this.modal_loading = false )
-    },
-
-    storeUser(){
-      this.modal_loading = true
-      this.$axios.post("/api/admin/users/store",this.user)
-        .then( () => {
-          this.$swal_success()
-          this.hideModal()
-        })
-        .finally( () => this.modal_loading = false )
-    },
-
     updateUser(){
       this.modal_loading = true
       this.$axios.post(`/api/admin/users/update/${this.user.id}`,this.user)
         .then( () => {
           this.$swal_success()
+          this.$refs.table.fetchMethod()
           this.hideModal()
         })
         .finally( () => this.modal_loading = false )
@@ -206,7 +190,10 @@ export default {
         confirmed_then: () => {
           this.loading = true
           this.$axios.post(`/api/admin/users/delete/${id}`)
-            .then( () => this.$swal_success() )
+            .then( () => {
+              this.$swal_success()
+              this.$refs.table.fetchMethod()
+            })
             .finally( () => this.loading = false )
         }
       })
