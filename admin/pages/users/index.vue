@@ -40,6 +40,13 @@
                 :_default_value="user.phone"
               />
 
+              <InputSolid
+                _label="آدرس"
+                _placeholder="آدرس را وارد کنید"
+                :updateHook="val => user.address = val"
+                :_default_value="user.address"
+              />
+
               <SelectSingle
                 _placeholder="وضعیت را انتخاب کنید"
                 _label="وضعیت"

@@ -25,7 +25,6 @@ class UserSeeder extends Seeder
                     "email" => "amirilidan78@gmail.com",
                     "gender" => UserGenderEnum::MALE,
                     "password" => bcrypt("Amir.23334152"),
-                    "birth_date" => now()->format(env("DATE_FORMAT")) ,
                     "address" => "کرمان رفسنجان آفتاب 12",
                     "mobile" => "03434242554",
                     "avatar" => null,

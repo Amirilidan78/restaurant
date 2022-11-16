@@ -155,6 +155,14 @@ export default {
   top: 50%;
 }
 
+.multiselect__select {
+  left: 1px !important;
+  right: unset !important;
+}
+.multiselect--active .multiselect__select {
+  transform: unset;
+}
+
 .multiselect--disabled .multiselect__current, .multiselect--disabled .multiselect__select {
   background: none !important;
 }
@@ -228,5 +236,11 @@ export default {
 }
 .multiselect__input {
   background: #F5F8FA;
+}
+.multiselect__single{
+  text-align: right;
+}
+.multiselect__option {
+  text-align: right;
 }
 </style>

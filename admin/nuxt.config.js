@@ -52,6 +52,7 @@ export default {
     '@nuxtjs/axios',
     'vue-sweetalert2/nuxt',
     'cookie-universal-nuxt',
+    'nuxt-vue-multiselect',
   ],
 
   axios: {

@@ -16,7 +16,6 @@ class UserResource extends ResourceCore
             "mobile" => $this["mobile"] ,
             "gender" => $this["gender"] ,
             "gender_text" => $this["gender"]?->text() ,
-            "birth_date" => $this["birth_date"] ,
             "address" => $this["address"] ,
             "avatar" => $this["avatar"] ,
             "state" => $this["state"] ,
