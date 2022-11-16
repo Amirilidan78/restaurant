@@ -32,12 +32,17 @@ export default {
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
+    // core
     { src: '~plugins/core/auth', mode: 'client' } ,
+    // config
     { src: '~plugins/config/axios', mode: 'client' } ,
     { src: '~plugins/config/swal', mode: 'client' } ,
+    // custom
     { src: '~plugins/custom/confirmation', mode: 'client' } ,
     { src: '~plugins/custom/click-outside', mode: 'client' } ,
     { src: '~plugins/custom/file', mode: 'client' } ,
+    // package
+    { src: '~plugins/package/date-picker', mode: 'client' } ,
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components

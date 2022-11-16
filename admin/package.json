@@ -16,6 +16,7 @@
     "nuxt-vue-multiselect": "^1.0.4",
     "vue": "^2.6.14",
     "vue-loading-spinner": "^1.0.11",
+    "vue-persian-datetime-picker": "^2.10.4",
     "vue-server-renderer": "^2.6.14",
     "vue-sweetalert2": "^5.0.5",
     "vue-template-compiler": "^2.6.14",

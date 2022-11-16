@@ -12,6 +12,7 @@ class UpdateUserRequest extends FormRequest
             "first_name" => "required" ,
             "last_name" => "required" ,
             "gender" => "required" ,
+            "birth_date" => "required" ,
             "phone" => "required" ,
             "address" => "required" ,
             "state" => "required" ,

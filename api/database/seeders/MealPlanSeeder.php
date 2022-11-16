@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Meal;
 use App\Models\MealPlan;
+use App\Services\Date\DateService;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -18,7 +19,7 @@ class MealPlanSeeder extends Seeder
         foreach ( $meals as $index => $meal ) {
             $plans[] = [
                 [
-                    "date" => now()->addDays($index)->format(env("DATE_FORMAT"))
+                    "date" => DateService::CarbonToDate(now()->addDays($index))
                 ],
                 [
                     "meal_id" => $meal["id"]

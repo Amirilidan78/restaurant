@@ -33,6 +33,13 @@
                 :_default_value="{ id : user.gender ,name : user.gender_text }"
               />
 
+              <DatePickerSimple
+                _label="تاریخ تولد"
+                _placeholder="تاریخ تولد را انتخاب کنید"
+                :_updateHook="( val ) => user.birth_date = val"
+                :_default_value="user.birth_date"
+              />
+
               <InputSolid
                 _label="شماره همراه"
                 _placeholder="شماره همراه را وارد کنید"

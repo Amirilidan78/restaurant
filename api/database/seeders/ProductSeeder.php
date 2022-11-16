@@ -22,6 +22,8 @@ class ProductSeeder extends Seeder
                     "images" => [],
                     "price" => 5000,
                     "stock" => 20,
+                    "pre_order_delay_hour" => 24,
+                    "pre_order_min_amount" => 10,
                 ],
             ],
             [

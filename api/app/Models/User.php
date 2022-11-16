@@ -13,6 +13,7 @@ class User extends MongoAuthParent
     protected $casts = [
       "gender" => UserGenderEnum::class ,
       "state" => UserStateEnum::class ,
+      "birth_date" => "date" ,
     ];
 
     public function orders() : HasMany
