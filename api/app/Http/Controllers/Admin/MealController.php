@@ -14,6 +14,11 @@ use Illuminate\Http\Response;
 class MealController extends BaseController
 {
 
+    public function all() : AnonymousResourceCollection
+    {
+        return MealResource::collection( Meal::all() ) ;
+    }
+
     public function index() : AnonymousResourceCollection
     {
         return MealResource::collection( SearchTable::handle_search( Meal::query() ) ) ;

@@ -14,7 +14,7 @@ export default {
 
     _sm : {
       type : Boolean ,
-      default : false
+      default : true
     },
 
     updateHook : {

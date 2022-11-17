@@ -14,6 +14,11 @@ use Illuminate\Http\Response;
 class ProductController extends BaseController
 {
 
+    public function all() : AnonymousResourceCollection
+    {
+        return ProductResource::collection( Product::all() ) ;
+    }
+
     public function index() : AnonymousResourceCollection
     {
         return ProductResource::collection( SearchTable::handle_search( Product::query() ) ) ;

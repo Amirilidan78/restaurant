@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\MealController;
+use App\Http\Controllers\Admin\MealPlanController;
 use App\Http\Controllers\Admin\MealScoreController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\ProfileController;
@@ -40,6 +41,7 @@ Route::middleware("auth-admin")->group(function () {
 
     // products
     Route::controller(ProductController::class)->prefix("/products")->group(function () {
+        Route::get('/all', 'all');
         Route::get('/index', 'index');
         Route::get('/show/{product}', 'show');
         Route::post('/store', 'store');
@@ -49,6 +51,7 @@ Route::middleware("auth-admin")->group(function () {
 
     // meals
     Route::controller(MealController::class)->prefix("/meals")->group(function () {
+        Route::get('/all', 'all');
         Route::get('/index', 'index');
         Route::get('/show/{meal}', 'show');
         Route::post('/store', 'store');
@@ -62,6 +65,13 @@ Route::middleware("auth-admin")->group(function () {
         Route::get('/show/{meal_score}', 'show');
         Route::post('/update/{meal_score}', 'update');
         Route::post('/delete/{meal_score}', 'delete');
+    });
+
+    // meal plans
+    Route::controller(MealPlanController::class)->prefix("/meal-plans")->group(function () {
+        Route::get('/index', 'index');
+        Route::get('/get-next-month-plans', 'getNextMonthPlans');
+        Route::post('/update-next-month-plans', 'updateNextMonthPlans');
     });
 
 });

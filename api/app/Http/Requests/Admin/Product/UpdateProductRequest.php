@@ -10,10 +10,13 @@ class UpdateProductRequest extends FormRequest
     {
         return [
             "name" => "required" ,
+            "type" => "required" ,
             "description" => "required" ,
             "images" => "required" ,
             "price" => "required" ,
-            "stock" => "required" ,
+            "stock" => "nullable" ,
+            "pre_order_delay_day" => "nullable" ,
+            "pre_order_min_amount" => "nullable" ,
         ];
     }
 }

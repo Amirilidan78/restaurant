@@ -9,8 +9,6 @@ use App\Http\Resources\NotSecure\MealScoreResource;
 use App\Models\MealScore;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Response;
-use Jenssegers\Mongodb\Query\Builder;
-use Jenssegers\Mongodb\Relations\EmbedsOne;
 
 class MealScoreController extends BaseController
 {

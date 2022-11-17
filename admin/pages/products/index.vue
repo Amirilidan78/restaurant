@@ -19,6 +19,14 @@
                 :_default_value="product.name"
               />
 
+              <SelectSingle
+                _label="نوع"
+                _placeholder="نوع را انتخاب کنید"
+                :_options="[{id: 'pre_order', name: 'سفارشی'}, {id: 'store', name: 'انباری'}]"
+                :updateHook="( val ) => product.type = val "
+                :_default_value="{ id: product.type ,name: product.type_text }"
+              />
+
               <InputSolid
                 _label="توضیحات"
                 _placeholder="توضیحات را وارد کنید"
@@ -35,6 +43,25 @@
               />
 
               <InputSolid
+                v-if="product.type === 'pre_order'"
+                _label="حداقل تعداد روز مورد نیاز برای آماده سازی سفارش"
+                _placeholder="روز را وارد کنید"
+                :updateHook="val => product.pre_order_delay_day = val"
+                :_default_value="product.pre_order_delay_day"
+                _type="number"
+              />
+
+              <InputSolid
+                v-if="product.type === 'pre_order'"
+                _label="حداقل تعداد قابل قبول برای سفارش"
+                _placeholder="تعداد را وارد کنید"
+                :updateHook="val => product.pre_order_min_amount = val"
+                :_default_value="product.pre_order_min_amount"
+                _type="number"
+              />
+
+              <InputSolid
+                v-if="product.type === 'store'"
                 _label="موجودی"
                 _placeholder="موجودی را وارد کنید"
                 :updateHook="val => product.stock = val"
@@ -90,11 +117,12 @@
               <TableSimple
                 table="table"
                 _fetchUrl="/api/admin/products/index"
-                :_heads="[ 'نام', 'قیمت', 'عملیات ها' ]"
+                :_heads="[ 'نام', 'نوع', 'قیمت', 'عملیات ها' ]"
               >
                 <template v-slot="{items}">
                   <tr v-for="item in items">
                     <td>{{ item.name }}</td>
+                    <td>{{ item.type_text }}</td>
                     <td> <b>{{ item.price_string }}</b> تومان </td>
                     <td>
                       <span class="btn btn-warning btn-sm py-1 px-2 fs-8" @click="() => showEditModal(item)" >ویرایش</span>

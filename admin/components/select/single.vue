@@ -1,6 +1,6 @@
 <template>
   <div class="fv-row" :class="{ 'mb-6' : !_sm , 'mb-3' : _sm }">
-    <label class="form-label fw-bold label-select text-dark " :class="{ 'fs-8' : _sm,'fs-6' : !_sm  }">{{ _label }}</label>
+    <label v-if="_label" class="form-label fw-bold label-select text-dark " :class="{ 'fs-8' : _sm,'fs-6' : !_sm  }">{{ _label }}</label>
     <multiselect
       :disabled="_disabled"
       :searchable="_searchable"
@@ -146,7 +146,7 @@ export default {
 }
 
 .multiselect__select:before {
-  z-index: 999;
+  z-index: 20;
   top: 50%;
 }
 

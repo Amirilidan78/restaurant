@@ -54,21 +54,27 @@
                     />
 
                     <AsideSingleItem
+                      _icon="book"
+                      _title="وعده های غذلیی"
+                      _to="/meal-plans"
+                    />
+
+                    <AsideSingleItem
                       _icon="cube"
                       _title="محصولات"
                       _to="/products"
                     />
 
                     <AsideSingleItem
-                      _icon="users"
-                      _title="کاربران"
-                      _to="/users"
-                    />
-
-                    <AsideSingleItem
                       _icon="check-list"
                       _title="امتیاز ها"
                       _to="/meal-scores"
+                    />
+
+                    <AsideSingleItem
+                      _icon="users"
+                      _title="کاربران"
+                      _to="/users"
                     />
 
                     <AsideSingleItem

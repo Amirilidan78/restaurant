@@ -12,8 +12,8 @@ class MealPlanResource extends ResourceCore
         return [
             "id" => $this["id"] ,
             "meal_id" => $this["meal_id"] ,
-            "date" => DateService::CarbonToDate($this["date"]) ,
-            "date_jalali" => DateService::CarbonToJalaliDate($this["date"]) ,
+            "date" => DateService::DateToDate($this["date"]) ,
+            "date_jalali" => DateService::DateToJalaliDate($this["date"]) ,
             "meal" => new MealResource($this->whenLoaded("meal")) ,
         ];
     }

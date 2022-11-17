@@ -48,7 +48,7 @@
                   <ul class="pagination">
                     <!--- prev --->
                     <li class="page-item previous" :class="{ 'disabled' : current_page === 1}">
-                      <a class="page-link cursor-pointer" @click="changePage( current_page - 1)" :disabled="current_page === 1"><i class="previous"></i></a>
+                      <a class="page-link cursor-pointer" @click="changePage( current_page - 1)" :disabled="current_page === 1"><i class="next"></i></a>
                     </li>
                     <!--- pages --->
                     <li v-for="page in pages" class="page-item " :class="{ 'active' : page === current_page }" >
@@ -56,14 +56,14 @@
                     </li>
                     <!--- next --->
                     <li class="page-item next" :class="{ 'disabled' : current_page === last_page }">
-                      <a class="page-link cursor-pointer" @click="changePage( current_page + 1)" :disabled="current_page === last_page"><i class="next"></i></a>
+                      <a class="page-link cursor-pointer" @click="changePage( current_page + 1)" :disabled="current_page === last_page"><i class="previous"></i></a>
                     </li>
                   </ul>
                 </div>
 
                 <div class="text-end">
                   <span class="fw-bold text-muted fs-7">
-                    Showing {{ from }} to {{ to }} of {{ total }} records
+                    از {{ from }} تا {{ to }} نمایش میدهد از {{ total }} عدد رکورد
                   </span>
                 </div>
 
