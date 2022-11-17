@@ -17,7 +17,8 @@ class AdminResource extends ResourceCore
             "email" => $this["email"] ,
             "avatar" => $this["avatar"] ,
             "state" => $this["state"] ,
-            "role" => $this["role"] ,
+            "role" => $this["role"]?->value ,
+            "role_text" => $this["role"]?->text() ,
         ];
 
     }

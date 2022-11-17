@@ -4,7 +4,7 @@
     <ModalCenter :_show="modal" :_dismissHook="hideModal" _size="md">
       <template v-slot:header>
         <span class="px-2" v-if="editing">ویرایش غذا</span>
-        <span class="px-2" v-else>ایجاد غدای جدید</span>
+        <span class="px-2" v-else>ایجاد غذای جدید</span>
       </template>
       <template v-slot:body>
         <div class="w-100" >
@@ -80,7 +80,7 @@
             </div>
             <div class="card-body">
               <TableSimple
-                table="table"
+                ref="table"
                 _fetchUrl="/api/admin/meals/index"
                 :_heads="[ 'نام', 'قیمت', 'عملیات ها' ]"
               >
@@ -106,6 +106,7 @@
 
 <script>
 export default {
+
   layout: "admin",
 
   middleware: ['auth'],

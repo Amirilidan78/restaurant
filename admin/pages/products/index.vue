@@ -115,7 +115,7 @@
             </div>
             <div class="card-body">
               <TableSimple
-                table="table"
+                ref="table"
                 _fetchUrl="/api/admin/products/index"
                 :_heads="[ 'نام', 'نوع', 'قیمت', 'عملیات ها' ]"
               >

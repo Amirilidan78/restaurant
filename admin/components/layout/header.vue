@@ -71,11 +71,21 @@
                       _to="/meal-scores"
                     />
 
+                    <div class="separator my-3"></div>
+
                     <AsideSingleItem
                       _icon="users"
                       _title="کاربران"
                       _to="/users"
                     />
+
+                    <AsideSingleItem
+                      _icon="admins"
+                      _title="ادمین ها"
+                      _to="/admins"
+                    />
+
+                    <div class="separator my-3"></div>
 
                     <AsideSingleItem
                       _icon="user"

@@ -7,8 +7,7 @@ use App\Models\Enums\OrderDeliveryTypeEnum;
 use App\Models\Enums\OrderPackingTypeEnum;
 use App\Models\Enums\OrderStateEnum;
 use Jenssegers\Mongodb\Relations\BelongsTo;
-use Jenssegers\Mongodb\Relations\EmbedsMany;
-use Jenssegers\Mongodb\Relations\EmbedsOne;
+use Jenssegers\Mongodb\Relations\HasMany;
 
 class Order extends MongoModelParent
 {
@@ -24,13 +23,8 @@ class Order extends MongoModelParent
         return $this->belongsTo(User::class);
     }
 
-    public function meal_plan() : BelongsTo
+    public function items() : HasMany
     {
-        return $this->belongsTo(MealPlan::class);
-    }
-
-    public function products_embed() : EmbedsMany
-    {
-        return $this->embedsMany(Product::class);
+        return $this->hasMany(OrderItem::class);
     }
 }

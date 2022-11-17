@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\MealController;
 use App\Http\Controllers\Admin\MealPlanController;
@@ -37,6 +38,15 @@ Route::middleware("auth-admin")->group(function () {
         Route::get('/show/{user}', 'show');
         Route::post('/update/{user}', 'update');
         Route::post('/delete/{user}', 'delete');
+    });
+
+    // admins
+    Route::controller(AdminController::class)->prefix("/admins")->group(function () {
+        Route::get('/index', 'index');
+        Route::get('/show/{admin}', 'show');
+        Route::post('/store', 'store');
+        Route::post('/update/{admin}', 'update');
+        Route::post('/delete/{admin}', 'delete');
     });
 
     // products
