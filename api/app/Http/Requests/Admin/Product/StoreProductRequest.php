@@ -10,13 +10,14 @@ class StoreProductRequest extends FormRequest
     {
         return [
             "name" => "required" ,
-            "type" => "required" ,
             "description" => "required" ,
             "images" => "required" ,
             "price" => "required" ,
-            "stock" => "nullable" ,
-            "pre_order_delay_day" => "nullable" ,
-            "pre_order_min_amount" => "nullable" ,
+            "has_stock" => "required" ,
+            "stock" => "required_if:has_stock,true" ,
+            "can_preorder" => "required" ,
+            "preorder_delay_day" => "required_if:can_preorder,true" ,
+            "preorder_min_amount" => "required_if:can_preorder,true" ,
         ];
     }
 }

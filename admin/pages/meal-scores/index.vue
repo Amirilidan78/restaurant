@@ -1,5 +1,5 @@
 <template>
-  <div >
+  <div>
 
     <ModalCenter :_show="modal" :_dismissHook="hideModal" _size="md">
       <template v-slot:header>
@@ -14,7 +14,6 @@
       </template>
       <template v-slot:footer>
         <div class="w-100 text-end">
-          <button class="btn btn-sm btn-primary"  v-if="!score.is_accepted" @click="acceptScore">تایید و نمایش در سایت</button>
           <button class="btn btn-sm btn-danger" @click="deleteScore">حذف</button>
         </div>
       </template>
@@ -31,7 +30,7 @@
               <TableSimple
                 ref="table"
                 _fetchUrl="/api/admin/meal-scores/index"
-                :_heads="[ 'کاربر', 'غذا', 'تاریخ', 'امتیاز', 'تایید شده', 'عملیات' ]"
+                :_heads="[ 'کاربر', 'غذا', 'تاریخ', 'امتیاز', 'عملیات' ]"
               >
                 <template v-slot="{items}">
                   <tr v-for="item in items">
@@ -39,7 +38,6 @@
                     <td>{{ item.meal_plan.meal.name }}</td>
                     <td>{{ item.meal_plan.date_jalali }}</td>
                     <td>{{ item.score }}</td>
-                    <td>{{ item.is_accepted_text }}</td>
                     <td>
                       <span class="btn btn-warning btn-sm py-1 px-2 fs-8" @click="() => showModal(item)" >مشاهده</span>
                     </td>
@@ -91,11 +89,6 @@ export default {
           this.hideModal()
         })
         .finally( () => this.modal_loading = false )
-    },
-
-    acceptScore(){
-      this.score.is_accepted = true
-      this.updateMealScore()
     },
 
     deleteScore(){

@@ -19,14 +19,6 @@
                 :_default_value="product.name"
               />
 
-              <SelectSingle
-                _label="نوع"
-                _placeholder="نوع را انتخاب کنید"
-                :_options="[{id: 'pre_order', name: 'سفارشی'}, {id: 'store', name: 'انباری'}]"
-                :updateHook="( val ) => product.type = val "
-                :_default_value="{ id: product.type ,name: product.type_text }"
-              />
-
               <InputSolid
                 _label="توضیحات"
                 _placeholder="توضیحات را وارد کنید"
@@ -42,26 +34,14 @@
                 _type="number"
               />
 
-              <InputSolid
-                v-if="product.type === 'pre_order'"
-                _label="حداقل تعداد روز مورد نیاز برای آماده سازی سفارش"
-                _placeholder="روز را وارد کنید"
-                :updateHook="val => product.pre_order_delay_day = val"
-                :_default_value="product.pre_order_delay_day"
-                _type="number"
+              <SwitchSolid
+                _label="دارای موجودی"
+                :_updateHook="val => product.has_stock = val"
+                :_default_value="product.has_stock"
               />
 
               <InputSolid
-                v-if="product.type === 'pre_order'"
-                _label="حداقل تعداد قابل قبول برای سفارش"
-                _placeholder="تعداد را وارد کنید"
-                :updateHook="val => product.pre_order_min_amount = val"
-                :_default_value="product.pre_order_min_amount"
-                _type="number"
-              />
-
-              <InputSolid
-                v-if="product.type === 'store'"
+                v-if="product.has_stock"
                 _label="موجودی"
                 _placeholder="موجودی را وارد کنید"
                 :updateHook="val => product.stock = val"
@@ -69,7 +49,31 @@
                 _type="number"
               />
 
-              <div>
+              <SwitchSolid
+                _label="قابل سفارش دادن"
+                :_updateHook="val => product.can_preorder = val"
+                :_default_value="product.can_preorder"
+              />
+
+              <InputSolid
+                v-if="product.can_preorder"
+                _label="حداقل تعداد روز مورد نیاز برای آماده سازی سفارش"
+                _placeholder="روز را وارد کنید"
+                :updateHook="val => product.preorder_delay_day = val"
+                :_default_value="product.preorder_delay_day"
+                _type="number"
+              />
+
+              <InputSolid
+                v-if="product.can_preorder"
+                _label="حداقل تعداد قابل قبول برای سفارش"
+                _placeholder="تعداد را وارد کنید"
+                :updateHook="val => product.preorder_min_amount = val"
+                :_default_value="product.preorder_min_amount"
+                _type="number"
+              />
+
+              <div class="mt-4">
                 <label class="btn btn-primary w-200px" for="images" @click="() => $refs.product_image.click()">اضافه کردن عکس ها</label>
                 <input name="images" ref="product_image" type="file" hidden multiple @input="changeProductImages">
                 <div>
@@ -117,12 +121,12 @@
               <TableSimple
                 ref="table"
                 _fetchUrl="/api/admin/products/index"
-                :_heads="[ 'نام', 'نوع', 'قیمت', 'عملیات ها' ]"
+                :_heads="[ 'نام', 'موجودی', 'قیمت', 'عملیات ها' ]"
               >
                 <template v-slot="{items}">
                   <tr v-for="item in items">
                     <td>{{ item.name }}</td>
-                    <td>{{ item.type_text }}</td>
+                    <td>{{ item.stock ?? "-" }}</td>
                     <td> <b>{{ item.price_string }}</b> تومان </td>
                     <td>
                       <span class="btn btn-warning btn-sm py-1 px-2 fs-8" @click="() => showEditModal(item)" >ویرایش</span>

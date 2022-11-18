@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use App\Models\MealPlan;
 use App\Models\MealScore;
-use App\Models\OrderProduct;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -27,7 +26,6 @@ class MealScoreSeeder extends Seeder
                 [
                     "score" => rand(0,5) ,
                     "description" => Str::random(20) ,
-                    "is_accepted" => false
                 ]
             );
         }
