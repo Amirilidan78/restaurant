@@ -4,11 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Extensions\SearchTable;
 use App\Http\Controllers\BaseController;
-use App\Http\Requests\Admin\Meal\StoreMealRequest;
-use App\Http\Requests\Admin\Meal\UpdateMealRequest;
 use App\Http\Requests\Admin\MealPlan\UpdateNextMonthMealPlansRequest;
 use App\Http\Resources\NotSecure\MealPlanResource;
-use App\Models\Meal;
 use App\Models\MealPlan;
 use App\Services\Date\DateService;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
@@ -17,6 +14,7 @@ use Illuminate\Support\Str;
 
 class MealPlanController extends BaseController
 {
+    const DAYS = 14 ;
 
     public function index() : AnonymousResourceCollection
     {
@@ -25,8 +23,8 @@ class MealPlanController extends BaseController
 
     public function getNextMonthPlans() : Response
     {
-        // generate 30 next days
-        foreach (range(0,30) as $item) {
+        // generate DAYS next days
+        foreach (range(0,self::DAYS) as $item) {
             $dates[] = now()->addDays($item)->toDateString() ;
         }
         // get latest plans records

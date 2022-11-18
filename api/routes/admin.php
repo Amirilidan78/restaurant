@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\MealController;
 use App\Http\Controllers\Admin\MealPlanController;
 use App\Http\Controllers\Admin\MealScoreController;
+use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\UserController;
@@ -82,6 +83,13 @@ Route::middleware("auth-admin")->group(function () {
         Route::get('/index', 'index');
         Route::get('/get-next-month-plans', 'getNextMonthPlans');
         Route::post('/update-next-month-plans', 'updateNextMonthPlans');
+    });
+
+    // orders
+    Route::controller(OrderController::class)->prefix("/orders")->group(function () {
+        Route::get('/index', 'index');
+        Route::get('/show/{order}', 'show');
+        Route::post('/update/{order}', 'update');
     });
 
 });

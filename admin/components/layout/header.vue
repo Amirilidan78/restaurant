@@ -74,6 +74,14 @@
                     <div class="separator my-3"></div>
 
                     <AsideSingleItem
+                      _icon="paper"
+                      _title="سفارش ها"
+                      _to="/orders"
+                    />
+
+                    <div class="separator my-3"></div>
+
+                    <AsideSingleItem
                       _icon="users"
                       _title="کاربران"
                       _to="/users"
