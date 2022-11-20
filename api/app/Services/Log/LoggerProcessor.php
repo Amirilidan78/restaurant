@@ -2,8 +2,6 @@
 
 namespace App\Services\Log;
 
-use App\Models\Admin;
-use App\Models\User;
 use App\Services\Auth\AuthService;
 
 class LoggerProcessor
@@ -13,7 +11,7 @@ class LoggerProcessor
     {
         $model = AuthService::GetAuthenticatedEntity() ;
 
-        $record['extra']['user'] = $model->toArray() ;
+        $record['extra']['user'] = $model ? $model->toArray() : "guest" ;
 
         return $record;
     }

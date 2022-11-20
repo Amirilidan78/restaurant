@@ -2,6 +2,7 @@
 
 namespace App\Services\Log ;
 
+use App\Models\Enums\LogTypeEnum;
 use App\Models\Log;
 use App\Services\Telegram\TelegramService;
 use Monolog\Formatter\FormatterInterface;
@@ -17,7 +18,10 @@ class LoggerHandler extends AbstractProcessingHandler
 
     protected function write( array $record ): void
     {
-        Log::query()->create($record) ;
+        Log::query()->create([
+            "type" => LogTypeEnum::System ,
+            ...$record
+        ]) ;
 
         if( $record['level_name'] == "ERROR" ) // ERROR
         {
