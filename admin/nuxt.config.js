@@ -43,6 +43,7 @@ export default {
     { src: '~plugins/custom/file', mode: 'client' } ,
     // package
     { src: '~plugins/package/date-picker', mode: 'client' } ,
+    { src: '~plugins/package/pretty-json', mode: 'client' } ,
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components

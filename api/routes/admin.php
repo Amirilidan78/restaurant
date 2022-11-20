@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\MealController;
 use App\Http\Controllers\Admin\MealPlanController;
 use App\Http\Controllers\Admin\MealScoreController;
+use App\Http\Controllers\Admin\NotificationController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\ProfileController;
@@ -90,6 +91,12 @@ Route::middleware("auth-admin")->group(function () {
         Route::get('/index', 'index');
         Route::get('/show/{order}', 'show');
         Route::post('/update/{order}', 'update');
+    });
+
+    // notification
+    Route::controller(NotificationController::class)->prefix("/notifications")->group(function () {
+        Route::get("/admin-index", 'admin_index');
+        Route::get("/user-index", 'user_index');
     });
 
 });

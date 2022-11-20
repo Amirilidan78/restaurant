@@ -96,6 +96,20 @@
                     <div class="separator my-3"></div>
 
                     <AsideSingleItem
+                      _icon="admins"
+                      _title="پیام های ادمین ها"
+                      _to="/notifications/admins"
+                    />
+
+                    <AsideSingleItem
+                      _icon="admins"
+                      _title="پیام های کاربر ها"
+                      _to="/notifications/users"
+                    />
+
+                    <div class="separator my-3"></div>
+
+                    <AsideSingleItem
                       _icon="user"
                       _title="پروفایل"
                       _to="/profile"

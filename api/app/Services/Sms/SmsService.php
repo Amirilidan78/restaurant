@@ -30,7 +30,7 @@ class SmsService
         ])->post(self::host . $url, $payload) ;
 
         if ( $res->status() != 200 )
-            throw new \Exception($res->json()["title"]) ;
+            throw new \Exception($res->status() . "-" . json_encode($res->json())) ;
 
         return $res->json() ;
     }
