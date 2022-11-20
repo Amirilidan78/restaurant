@@ -201,3 +201,19 @@
 2022-11-18 09:19:03,314 INFO spawned: 'queue_00' with pid 9
 2022-11-18 09:19:04,315 INFO success: cron_00 entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
 2022-11-18 09:19:04,315 INFO success: queue_00 entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2022-11-18 14:38:09,695 INFO Set uid to user 0 succeeded
+2022-11-18 14:38:09,706 INFO supervisord started with pid 1
+2022-11-18 14:38:10,710 INFO spawned: 'cron_00' with pid 8
+2022-11-18 14:38:10,711 INFO spawned: 'queue_00' with pid 9
+2022-11-18 14:38:11,713 INFO success: cron_00 entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2022-11-18 14:38:11,713 INFO success: queue_00 entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2022-11-20 09:17:36,463 WARN received SIGTERM indicating exit request
+2022-11-20 09:17:36,464 INFO waiting for cron_00, queue_00 to die
+2022-11-20 09:17:36,467 INFO stopped: queue_00 (terminated by SIGTERM)
+2022-11-20 09:17:36,468 INFO stopped: cron_00 (terminated by SIGTERM)
+2022-11-20 09:18:39,009 INFO Set uid to user 0 succeeded
+2022-11-20 09:18:39,026 INFO supervisord started with pid 1
+2022-11-20 09:18:40,029 INFO spawned: 'cron_00' with pid 8
+2022-11-20 09:18:40,031 INFO spawned: 'queue_00' with pid 9
+2022-11-20 09:18:41,032 INFO success: cron_00 entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2022-11-20 09:18:41,033 INFO success: queue_00 entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)

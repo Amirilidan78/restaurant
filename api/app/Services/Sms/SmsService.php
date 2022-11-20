@@ -46,6 +46,17 @@ class SmsService
         return $res["data"]["messageIds"][0] ;
     }
 
+    public static function SendWithTemplate(string $phone, SmsTemplate $template ,array $payload) : string
+    {
+        $res = self::post("/v1/send/verify",[
+            "Mobile" => $phone ,
+            "TemplateId" => $template->value ,
+            "Parameters" => $payload ,
+        ]);
+
+        return $res["data"]["messageId"];
+    }
+
     public static function Status(string $message_id, string $phone, string $text) : SmsDeliveryStateEnum
     {
         $res = self::get("/v1/send/$message_id",[

@@ -51,10 +51,17 @@ return [
     */
 
     'channels' => [
+
         'stack' => [
             'driver' => 'stack',
-            'channels' => ['single'],
+            'channels' => ['telegram'],
             'ignore_exceptions' => false,
+        ],
+
+        'telegram' => [
+            'driver' => 'custom',
+            'via'    => \App\Services\Log\Logger::class,
+            'level'  => 'debug',
         ],
 
         'single' => [

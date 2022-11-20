@@ -8,18 +8,23 @@
         </h3>
       </div>
       <div class="card-body">
-        <InputSolid
-          _label="نام کاربری"
-          _placeholder="نام کاربری خود را وارد کنید"
-          :updateHook="val => username = val"
-          :_default_value="username"
-        />
-        <p class="text-muted">
-          پیامی حاوی لینک فراموشی برای شما ارسال خواهد شد,
-          با کلیک روی لینک میتواند رمز عبور حساب کاربری خود را تغییر دهید.
-        </p>
+        <template v-if="!loading">
+          <InputSolid
+            _label="نام کاربری"
+            _placeholder="نام کاربری خود را وارد کنید"
+            :updateHook="val => username = val"
+            :_default_value="username"
+          />
+          <p class="text-muted">
+            پیامی حاوی لینک فراموشی برای شما ارسال خواهد شد,
+            با کلیک روی لینک میتواند رمز عبور حساب کاربری خود را تغییر دهید.
+          </p>
+        </template>
+        <template v-else >
+          <LoadingSimple h="300" v-if="loading" />
+        </template>
       </div>
-      <div class="card-footer text-center">
+      <div class="card-footer text-center" v-if="!loading">
         <button class="btn btn-sm w-100 btn-primary mb-3" @click="forgotPassword">ارسال لینک فراموشی</button>
         <nuxt-link class="text-primary" to="/auth/login">بازگشت به صفحه ورود</nuxt-link>
       </div>
@@ -36,12 +41,14 @@ export default {
 
   data(){
     return {
-      "username" : "ilidan" ,
+      loading : false ,
+      username : "ilidan" ,
     }
   },
 
   methods : {
     forgotPassword(){
+      this.loading = true
       this.$axios.$post("/api/admin/auth/forgot-password",{
         "username": this.username ,
       })
@@ -53,6 +60,7 @@ export default {
         })
         this.$router.push("/auth/login")
       })
+        .finally( () => this.loading = false )
     }
   }
 

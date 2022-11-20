@@ -10,6 +10,7 @@ use App\Http\Requests\Admin\Auth\ValidateForgotPasswordRequest;
 use App\Models\Admin;
 use App\Models\Enums\RequestTypeEnum;
 use App\Models\Request;
+use App\Notifications\Admin\ForgotPasswordNotification;
 use App\Services\Auth\AuthModel;
 use App\Services\Auth\AuthService;
 use App\Services\Auth\AuthTypeEnum;
@@ -62,7 +63,7 @@ class AuthController extends BaseController
             "token" => Str::random(20) ,
         ]) ;
 
-        /// TODO : send sms => $request["token"]
+        $admin->notify( new ForgotPasswordNotification($request["token"]) ) ;
 
         return $this->response->ok() ;
     }

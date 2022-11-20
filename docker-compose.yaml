@@ -79,6 +79,7 @@ services:
       context: ./admin/
       dockerfile: Dockerfile
     container_name: admin-restaurant-container
+    restart: unless-stopped
     ports:
       - "3000:3000"
     volumes:

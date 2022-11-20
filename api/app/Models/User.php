@@ -16,6 +16,11 @@ class User extends MongoAuthParent
       "birth_date" => "date" ,
     ];
 
+    public function notifications() : HasMany
+    {
+        return $this->hasMany( UserNotification::class  ) ;
+    }
+
     public function orders() : HasMany
     {
         return $this->hasMany(Order::class);
