@@ -26,16 +26,33 @@ class OrderSeeder extends Seeder
         $user = User::query()->firstOrFail() ;
 
         // -------------- order type meal -------------- //
+        foreach ( range(0,10) as $_ )
+            $this->createMealOrder($meal,$products,$user) ;
+
+        // -------------- order type store -------------- //
+        foreach ( range(0,10) as $_ )
+            $this->createMealStore($products,$user) ;
+
+        // -------------- order Preorder store -------------- //
+        foreach ( range(0,10) as $_ )
+            $this->createMealPreorder($products,$user) ;
+
+
+    }
+
+
+    private function createMealOrder(Meal $meal,$products,User $user)
+    {
         $model = Order::query()->updateOrCreate(
             [
                 "type" => OrderTypeEnum::Meal ,
+                "total_price" => rand(100000,300000) ,
             ],
             [
                 "user_id" => $user["id"] ,
-                "total_price" => rand(100000,300000) ,
                 "delivery_type" => OrderDeliveryTypeEnum::InPerson ,
                 "packing_type" => OrderPackingTypeEnum::PlasticContainer ,
-                "state" => OrderStateEnum::Pending ,
+                "state" => OrderStateEnum::Payed ,
                 "date" => DateService::CarbonToDate(now()) ,
                 "description" => Str::random(40) ,
                 "admin_comment" => "" ,
@@ -55,18 +72,20 @@ class OrderSeeder extends Seeder
                 "quantity" => rand(1,10) ,
             ]) ;
         }
+    }
 
-        // -------------- order type store -------------- //
+    private function createMealStore($products,User $user)
+    {
         $model = Order::query()->updateOrCreate(
             [
                 "type" => OrderTypeEnum::Store ,
+                "total_price" => rand(100000,300000) ,
             ],
             [
                 "user_id" => $user["id"] ,
-                "total_price" => rand(100000,300000) ,
                 "delivery_type" => OrderDeliveryTypeEnum::InPerson ,
                 "packing_type" => OrderPackingTypeEnum::PlasticContainer ,
-                "state" => OrderStateEnum::Pending ,
+                "state" => OrderStateEnum::Payed ,
                 "date" => DateService::CarbonToDate(now()) ,
                 "description" => Str::random(40) ,
                 "admin_comment" => "" ,
@@ -80,18 +99,20 @@ class OrderSeeder extends Seeder
                 "quantity" => rand(1,10) ,
             ]) ;
         }
+    }
 
-        // -------------- order Preorder store -------------- //
+    private function createMealPreorder($products,User $user)
+    {
         $model = Order::query()->updateOrCreate(
             [
                 "type" => OrderTypeEnum::Preorder ,
+                "total_price" => rand(100000,300000) ,
             ],
             [
                 "user_id" => $user["id"] ,
-                "total_price" => rand(100000,300000) ,
                 "delivery_type" => OrderDeliveryTypeEnum::InPerson ,
                 "packing_type" => OrderPackingTypeEnum::PlasticContainer ,
-                "state" => OrderStateEnum::Pending ,
+                "state" => OrderStateEnum::Payed ,
                 "date" => DateService::CarbonToDate(now()) ,
                 "description" => Str::random(40) ,
                 "admin_comment" => "" ,
@@ -103,7 +124,5 @@ class OrderSeeder extends Seeder
             "price" => $products[0]["price"] ,
             "quantity" => rand(1,10) ,
         ]) ;
-
-
     }
 }

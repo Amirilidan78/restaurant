@@ -7,7 +7,9 @@
       </template>
       <template v-slot:body>
         <div class="w-100" >
-          <pretty-json :data="notification" />
+          <code>
+            {{ notification }}
+          </code>
         </div>
       </template>
     </ModalCenter>

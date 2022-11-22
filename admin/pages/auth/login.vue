@@ -8,19 +8,24 @@
         </h3>
       </div>
       <div class="card-body">
-        <InputSolid
-          _label="نام کاربری"
-          _placeholder="نام کاربری خود را وارد کنید"
-          :updateHook="val => username = val"
-          :_default_value="username"
-        />
-        <InputSolid
-          _label="رمز عبور"
-          _placeholder="رمز عبور خود را وارد کنید"
-          :updateHook="val => password = val"
-          :_default_value="password"
-          _type="password"
-        />
+        <template v-if="loading" >
+          <LoadingSimple h="200"/>
+        </template>
+        <template v-else >
+          <InputSolid
+            _label="نام کاربری"
+            _placeholder="نام کاربری خود را وارد کنید"
+            :updateHook="val => username = val"
+            :_default_value="username"
+          />
+          <InputSolid
+            _label="رمز عبور"
+            _placeholder="رمز عبور خود را وارد کنید"
+            :updateHook="val => password = val"
+            :_default_value="password"
+            _type="password"
+          />
+        </template>
       </div>
       <div class="card-footer text-center">
         <button class="btn btn-sm w-100 btn-primary mb-3" @click="login">ورود</button>
@@ -39,14 +44,16 @@ export default {
 
   data(){
     return {
-      "username" : "ilidan" ,
-      "password" : "Amir.23334152" ,
+      loading : false ,
+      username : "ilidan" ,
+      password : "Amir.23334152" ,
     }
   },
 
   methods : {
     login(){
 
+      this.loading = true
       this.$axios.$post("/api/admin/auth/login",{
         "username": this.username ,
         "password": this.password ,
@@ -58,7 +65,7 @@ export default {
           this.$router.push("/")
         })
 
-        .catch( err => console.log(err) )
+        .finally( () => this.loading = false )
     }
   }
 

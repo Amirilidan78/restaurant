@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\AuthController;
+use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\MealController;
 use App\Http\Controllers\Admin\MealPlanController;
 use App\Http\Controllers\Admin\MealScoreController;
@@ -25,6 +26,14 @@ Route::controller(AuthController::class)->prefix("/auth")->group(function () {
 Route::middleware("auth-admin")->group(function () {
 
     Route::get('/user', [AuthController::class,"user"]);
+
+    // dashboard
+    Route::controller(DashboardController::class)->prefix("/")->group(function () {
+        Route::get('/get-daily-meals-and-products', 'getDailyMealsAndProducts');
+        Route::get('/get-latest-orders', 'getLatestOrders');
+        Route::get('/get-daily-orders/{date?}', 'getDailyOrders');
+        Route::get('/get-sms-credit', 'getSmsCredit');
+    });
 
     // profile
     Route::controller(ProfileController::class)->prefix("/profile")->group(function () {

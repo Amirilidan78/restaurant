@@ -15,11 +15,10 @@ class Order extends MongoModelParent
 {
 
     protected $casts = [
-        "date" => "date"  ,
         "type" => OrderTypeEnum::class  ,
+        "state" => OrderStateEnum::class  ,
         "delivery_type" => OrderDeliveryTypeEnum::class  ,
         "packing_type" => OrderPackingTypeEnum::class  ,
-        "state" => OrderStateEnum::class  ,
     ] ;
 
     public function user() : BelongsTo

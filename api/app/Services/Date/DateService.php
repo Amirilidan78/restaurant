@@ -17,6 +17,11 @@ class DateService
         return Jalalian::fromCarbon(Carbon::create($date))->format(env("DATE_FORMAT")) ;
     }
 
+    public static function DateToJalaliHuman( string $date ) : string
+    {
+        return Jalalian::fromCarbon(Carbon::create($date))->ago() ;
+    }
+
     public static function CarbonToDate( Carbon $date ) : string
     {
         return $date->format(env("DATE_FORMAT")) ;

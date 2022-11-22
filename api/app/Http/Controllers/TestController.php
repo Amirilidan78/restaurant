@@ -2,30 +2,55 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Enums\UserStateEnum;
-use App\Models\MealPlan;
-use App\Models\User;
-use App\Services\Auth\AuthService;
+use App\Models\Enums\OrderStateEnum;
+use App\Models\Enums\OrderTypeEnum;
+use App\Models\Order;
 use App\Services\Date\DateService;
-use App\Services\Sms\SmsService;
-use App\Services\Sms\SmsTemplate;
-use App\Services\Telegram\TelegramService;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Str;
 
 class TestController extends Controller
 {
     public function __invoke()
     {
-        // SmsService::Send("09370843199","سلام");
-        // SmsService::Credit()
+        $dates = [
+            DateService::CarbonToDate(now()) ,
+            DateService::CarbonToDate(now()->addDay()) ,
+            DateService::CarbonToDate(now()->addDays(2)) ,
+            DateService::CarbonToDate(now()->addDays(3)) ,
+        ] ;
 
-        Log::info("123") ;
+        foreach ( $dates as $date ) {
 
-        dd(
-            1
-        ) ;
+            $records = Order::query()
+                ->where("type",OrderTypeEnum::Meal->value)
+                ->where("state",OrderStateEnum::Pending->value)
+                ->where("date",$date)
+                ->get()
+                ->map( fn( $item ) => [  "meal" => $item["meal"]?->toArray() ,"products" => $item["products"]?->toArray() ]) ;
 
-        return MealPlan::query()->where("date",">",now())->get() ;
+            $meal = [ "name" => "", "quantity" => 0 ] ;
+            $products = [] ;
+
+            foreach ( $records as $record ) {
+
+                $meal["name"] = $record["meal"]["name"] ;
+                $meal["quantity"] = $meal["quantity"] + $record["meal"]["quantity"] ;
+
+                foreach ( $record["products"] as $product ) {
+                    $products[$product['item_id']] = [
+                        "name" => $product["name"] ,
+                        "quantity" => $products[$product["item_id"]]["quantity"] ?? 0 + $product["quantity"] ,
+                    ] ;
+                }
+
+            }
+
+            $final[$date] = [
+                "meal" => $meal ,
+                "products" => $products ,
+            ] ;
+        }
+
+
+        return 1 ;
     }
 }
